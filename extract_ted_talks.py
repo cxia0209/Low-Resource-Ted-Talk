@@ -8,9 +8,9 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
-ftrain = io.open('all_talks_train.tsv','r',encoding='utf-8')
-fdev = io.open('all_talks_dev.tsv','r',encoding='utf-8')
-ftest = io.open('all_talks_test.tsv','r',encoding='utf-8')
+ftrain = io.open('data/all_talks_train.tsv','r',encoding='utf-8')
+fdev = io.open('data/all_talks_dev.tsv','r',encoding='utf-8')
+ftest = io.open('data/all_talks_test.tsv','r',encoding='utf-8')
 
 def get_language_pairs(ln):
     def get_data(csv_f):
@@ -29,7 +29,7 @@ def get_language_pairs(ln):
     def write_data(data, fname1, fname2):
         f1 = io.open(fname1,'w',encoding='utf-8')
         f2 = io.open(fname2,'w',encoding='utf-8')
-        print len(data)
+        print(len(data))
         for i in data:
             f1.write(unicode(i[0])+"\n")
             f2.write(unicode(i[1])+"\n")
