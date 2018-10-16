@@ -25,3 +25,6 @@ Note that we have provided a script, get_wikipedia.sh, that can be used to downl
 And use the following command: sh get_wikipedia.sh <language> where <language> is a two-letter language code. For example: sh get_wikipedia.sh gl will download and process the Galician wikipedia.
 
 We also provide the script we used to extract the parallel data from the files in ted_talks.tar.gz, extract_ted_talks.py, which could be useful in extracting data for other languages.
+
+
+- python nmt.py train --train-src=data/ted_talks/train.en-az.az.txt --train-tgt=data/ted_talks/train.en-az.en.txt --dev-src=data/ted_talks/dev.en-az.az.txt --dev-tgt=data/ted_talks/dev.en-az.en.txt --vocab=data/vocab.bin --batch-size=64
