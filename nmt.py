@@ -16,10 +16,12 @@ Options:
     --dev-src=<file>                        dev source file
     --dev-tgt=<file>                        dev target file
     --vocab=<file>                          vocab file
+    --embed-src=<file>                      pre-trained embeddings for src language
+    --embed-tgt=<file>                      pre-trained embeddings for tgt language
     --seed=<int>                            seed [default: 0]
     --batch-size=<int>                      batch size [default: 32]
-    --embed-size=<int>                      embedding size [default: 256]
-    --hidden-size=<int>                     hidden size [default: 256]
+    --embed-size=<int>                      embedding size [default: 300]
+    --hidden-size=<int>                     hidden size [default: 300]
     --clip-grad=<float>                     gradient clipping [default: 5.0]
     --log-every=<int>                       log every [default: 10]
     --max-epoch=<int>                       max epoch [default: 30]
@@ -67,14 +69,18 @@ Hypothesis = namedtuple('Hypothesis', ['value', 'score'])
 
 class NMT(object):
 
-    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2,keep_train=False):
+    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2,keep_train=False, embeddings=None):
         super(NMT, self).__init__()
 
         self.nvocab_src = len(vocab.src)
         self.nvocab_tgt = len(vocab.tgt)
         self.vocab = vocab
-        self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2)
-        self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,tf_rate=1.0)
+        src_embeddings, tgt_embeddings = embeddings
+        embed_size = src_embeddings['vectors'].size(1)
+        self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2,
+                               vocab=vocab.src, embeddings=src_embeddings)
+        self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,
+                               tf_rate=1.0, vocab=vocab.tgt, embeddings=tgt_embeddings)
         if keep_train:
             self.load('model')
         LAS_params = list(self.encoder.parameters()) + list(self.decoder.parameters())
@@ -367,10 +373,18 @@ def train(args):
 
     vocab = pickle.load(open(args['--vocab'], 'rb'))
 
+    src_embeddings = None
+    if args['--embed-src']:
+        src_embeddings = torch.load(args['--embed-src'])
+
+    tgt_embeddings = None
+    if args['--embed-src']:
+        tgt_embeddings = torch.load(args['--embed-tgt'])
+
     model = NMT(embed_size=int(args['--embed-size']),
                 hidden_size=int(args['--hidden-size']),
                 dropout_rate=float(args['--dropout']),
-                vocab=vocab,keep_train=False)
+                vocab=vocab, keep_train=False, embeddings=(src_embeddings, tgt_embeddings))
 
     num_trial = 0
     train_iter = patience = cum_loss = report_loss = cumulative_tgt_words = report_tgt_words = 0

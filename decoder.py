@@ -9,12 +9,11 @@ import numpy as np
 
 class Decoder(BaseCoder):
     def __init__(self, vocab_size, hidden_size, embedding_size, input_dropout=0.0, output_dropout=0.0, n_layers=1,
-                 bidirectional=False, rnn="lstm", tf_rate=0.9):
-        super(Decoder,self).__init__(vocab_size, hidden_size,embedding_size,input_dropout,output_dropout, n_layers, rnn)
+                 bidirectional=False, rnn="lstm", tf_rate=0.9, vocab=None, embeddings=None):
+        super(Decoder,self).__init__(vocab_size, hidden_size,embedding_size,input_dropout,output_dropout, n_layers, rnn, vocab, embeddings)
         self.rnn = self.baseModel(input_size=embedding_size, hidden_size=hidden_size, num_layers=n_layers, 
                     batch_first=True,dropout=output_dropout)
         self.output_size = vocab_size
-        self.embedding = nn.Embedding(vocab_size, embedding_size)
 
         # temporary set attention embedding size to hidden size
         self.attention = Attention(self.hidden_size)

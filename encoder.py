@@ -3,9 +3,8 @@ import torch.nn as nn
 from generalRnn import BaseCoder
 
 class Encoder(BaseCoder):
-    def __init__(self,vocab_size, hidden_size, embedding_size, input_dropout=0.0,output_dropout=0.0, n_layers=1, bidirectional=True,rnn="lstm"):
-        super(Encoder, self).__init__(vocab_size, hidden_size, embedding_size, input_dropout,output_dropout, n_layers, rnn)
-        self.embedding = nn.Embedding(vocab_size,embedding_size)
+    def __init__(self,vocab_size, hidden_size, embedding_size, input_dropout=0.0,output_dropout=0.0, n_layers=1, bidirectional=True,rnn="lstm", vocab=None, embeddings=None):
+        super(Encoder, self).__init__(vocab_size, hidden_size, embedding_size, input_dropout,output_dropout, n_layers, rnn, vocab, embeddings)
 
         # TODO: add pretrained embeddings
 
