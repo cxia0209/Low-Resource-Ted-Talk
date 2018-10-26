@@ -1,0 +1,181 @@
+/home/ubuntu/anaconda3/envs/nmt/lib/python3.6/site-packages/torch/nn/functional.py:52: UserWarning: size_average and reduce args will be deprecated, please use reduction='sum' instead.
+  warnings.warn(warning.format(ret))
+/home/ubuntu/anaconda3/envs/nmt/lib/python3.6/site-packages/torch/nn/functional.py:995: UserWarning: nn.functional.tanh is deprecated. Use torch.tanh instead.
+  warnings.warn("nn.functional.tanh is deprecated. Use torch.tanh instead.")
+epoch 1, iter 10, avg. loss 235.80, avg. ppl 60614.62 cum. examples 640, speed 1297.86 words/sec, time elapsed 10.56 sec
+epoch 1, iter 20, avg. loss 246.14, avg. ppl 39351.62 cum. examples 1280, speed 1495.02 words/sec, time elapsed 20.52 sec
+epoch 1, iter 30, avg. loss 203.67, avg. ppl 12252.32 cum. examples 1920, speed 1590.37 words/sec, time elapsed 29.22 sec
+epoch 1, iter 40, avg. loss 208.08, avg. ppl 9675.46 cum. examples 2560, speed 1325.05 words/sec, time elapsed 40.18 sec
+epoch 1, iter 50, avg. loss 178.08, avg. ppl 4455.75 cum. examples 3200, speed 1650.45 words/sec, time elapsed 48.40 sec
+epoch 1, iter 60, avg. loss 195.64, avg. ppl 5837.96 cum. examples 3840, speed 1437.21 words/sec, time elapsed 58.44 sec
+epoch 1, iter 70, avg. loss 191.19, avg. ppl 6082.28 cum. examples 4480, speed 1406.13 words/sec, time elapsed 68.43 sec
+epoch 1, iter 80, avg. loss 197.44, avg. ppl 5589.71 cum. examples 5120, speed 1408.45 words/sec, time elapsed 78.83 sec
+epoch 1, iter 90, avg. loss 182.16, avg. ppl 5048.58 cum. examples 5760, speed 1478.76 words/sec, time elapsed 88.07 sec
+epoch 1, iter 100, avg. loss 183.65, avg. ppl 4492.78 cum. examples 6400, speed 1489.49 words/sec, time elapsed 97.45 sec
+epoch 2, iter 110, avg. loss 188.55, avg. ppl 4130.04 cum. examples 6990, speed 1449.11 words/sec, time elapsed 106.67 sec
+epoch 2, iter 120, avg. loss 198.92, avg. ppl 5862.54 cum. examples 7630, speed 1354.94 words/sec, time elapsed 117.50 sec
+epoch 2, iter 130, avg. loss 190.85, avg. ppl 4403.76 cum. examples 8270, speed 1496.82 words/sec, time elapsed 127.23 sec
+epoch 2, iter 140, avg. loss 181.25, avg. ppl 4199.98 cum. examples 8910, speed 1517.77 words/sec, time elapsed 136.39 sec
+epoch 2, iter 150, avg. loss 187.45, avg. ppl 5429.74 cum. examples 9550, speed 1359.24 words/sec, time elapsed 146.65 sec
+epoch 2, iter 160, avg. loss 195.10, avg. ppl 5932.15 cum. examples 10190, speed 1334.95 words/sec, time elapsed 157.42 sec
+epoch 2, iter 170, avg. loss 180.26, avg. ppl 3655.87 cum. examples 10830, speed 1642.89 words/sec, time elapsed 165.98 sec
+epoch 2, iter 180, avg. loss 182.23, avg. ppl 3625.70 cum. examples 11470, speed 1590.92 words/sec, time elapsed 174.92 sec
+epoch 2, iter 190, avg. loss 185.03, avg. ppl 5116.65 cum. examples 12110, speed 1385.57 words/sec, time elapsed 184.93 sec
+epoch 2, iter 200, avg. loss 177.41, avg. ppl 4438.00 cum. examples 12750, speed 1431.51 words/sec, time elapsed 194.38 sec
+epoch 2, iter 200, cum. loss 194.47, cum. ppl 6628.42 cum. examples 12750
+begin validation ...
+/home/ubuntu/anaconda3/envs/nmt/lib/python3.6/site-packages/nltk/translate/bleu_score.py:503: UserWarning: 
+The hypothesis contains 0 counts of 4-gram overlaps.
+Therefore the BLEU score evaluates to 0, independently of
+how many N-gram overlaps of lower order it contains.
+Consider using lower n-gram order or use SmoothingFunction()
+  warnings.warn(_msg)
+bleu score:  3.864300813427481e-79
+validation: iter 200, dev. ppl 22134.192057
+save currently the best model to [model]
+epoch 3, iter 210, avg. loss 191.24, avg. ppl 4523.47 cum. examples 590, speed 818.17 words/sec, time elapsed 210.76 sec
+epoch 3, iter 220, avg. loss 183.81, avg. ppl 4575.40 cum. examples 1230, speed 1396.21 words/sec, time elapsed 220.76 sec
+epoch 3, iter 230, avg. loss 183.55, avg. ppl 4069.82 cum. examples 1870, speed 1479.68 words/sec, time elapsed 230.31 sec
+epoch 3, iter 240, avg. loss 186.00, avg. ppl 3318.97 cum. examples 2510, speed 1594.79 words/sec, time elapsed 239.51 sec
+epoch 3, iter 250, avg. loss 178.17, avg. ppl 3801.46 cum. examples 3150, speed 1537.73 words/sec, time elapsed 248.51 sec
+epoch 3, iter 260, avg. loss 190.66, avg. ppl 4915.91 cum. examples 3790, speed 1392.26 words/sec, time elapsed 258.82 sec
+epoch 3, iter 270, avg. loss 186.49, avg. ppl 5120.31 cum. examples 4430, speed 1324.49 words/sec, time elapsed 269.37 sec
+epoch 3, iter 280, avg. loss 186.58, avg. ppl 5445.27 cum. examples 5070, speed 1376.18 words/sec, time elapsed 279.46 sec
+epoch 3, iter 290, avg. loss 183.72, avg. ppl 4524.23 cum. examples 5710, speed 1386.45 words/sec, time elapsed 289.53 sec
+epoch 3, iter 300, avg. loss 179.35, avg. ppl 3210.85 cum. examples 6350, speed 1573.61 words/sec, time elapsed 298.57 sec
+epoch 4, iter 310, avg. loss 168.11, avg. ppl 2570.95 cum. examples 6940, speed 1622.82 words/sec, time elapsed 306.35 sec
+epoch 4, iter 320, avg. loss 174.97, avg. ppl 2799.70 cum. examples 7580, speed 1693.27 words/sec, time elapsed 314.68 sec
+epoch 4, iter 330, avg. loss 181.56, avg. ppl 3782.73 cum. examples 8220, speed 1457.61 words/sec, time elapsed 324.36 sec
+epoch 4, iter 340, avg. loss 192.91, avg. ppl 7080.10 cum. examples 8860, speed 1197.41 words/sec, time elapsed 335.99 sec
+epoch 4, iter 350, avg. loss 183.41, avg. ppl 3864.39 cum. examples 9500, speed 1483.91 words/sec, time elapsed 345.57 sec
+epoch 4, iter 360, avg. loss 184.93, avg. ppl 3473.79 cum. examples 10140, speed 1525.60 words/sec, time elapsed 355.08 sec
+epoch 4, iter 370, avg. loss 186.96, avg. ppl 4242.16 cum. examples 10780, speed 1408.33 words/sec, time elapsed 365.26 sec
+epoch 4, iter 380, avg. loss 180.81, avg. ppl 4596.12 cum. examples 11420, speed 1296.14 words/sec, time elapsed 375.84 sec
+epoch 4, iter 390, avg. loss 183.23, avg. ppl 4659.44 cum. examples 12060, speed 1322.13 words/sec, time elapsed 386.34 sec
+epoch 4, iter 400, avg. loss 188.46, avg. ppl 3437.88 cum. examples 12700, speed 1478.35 words/sec, time elapsed 396.36 sec
+epoch 4, iter 400, cum. loss 183.78, cum. ppl 4090.01 cum. examples 12700
+begin validation ...
+bleu score:  3.433507487881653e-79
+validation: iter 400, dev. ppl 23211.586589
+hit patience 1
+epoch 5, iter 410, avg. loss 179.61, avg. ppl 3338.92 cum. examples 590, speed 909.69 words/sec, time elapsed 410.72 sec
+epoch 5, iter 420, avg. loss 189.65, avg. ppl 3409.23 cum. examples 1230, speed 1445.61 words/sec, time elapsed 421.04 sec
+epoch 5, iter 430, avg. loss 175.08, avg. ppl 3176.80 cum. examples 1870, speed 1525.87 words/sec, time elapsed 430.15 sec
+epoch 5, iter 440, avg. loss 193.31, avg. ppl 4905.49 cum. examples 2510, speed 1315.47 words/sec, time elapsed 441.22 sec
+epoch 5, iter 450, avg. loss 174.81, avg. ppl 3046.11 cum. examples 3150, speed 1461.33 words/sec, time elapsed 450.76 sec
+epoch 5, iter 460, avg. loss 167.67, avg. ppl 2682.87 cum. examples 3790, speed 1604.65 words/sec, time elapsed 459.23 sec
+epoch 5, iter 470, avg. loss 169.54, avg. ppl 2682.26 cum. examples 4430, speed 1537.41 words/sec, time elapsed 468.17 sec
+epoch 5, iter 480, avg. loss 181.66, avg. ppl 3512.42 cum. examples 5070, speed 1550.65 words/sec, time elapsed 477.36 sec
+epoch 5, iter 490, avg. loss 183.37, avg. ppl 3227.77 cum. examples 5710, speed 1459.19 words/sec, time elapsed 487.31 sec
+epoch 5, iter 500, avg. loss 173.03, avg. ppl 3085.99 cum. examples 6350, speed 1470.23 words/sec, time elapsed 496.69 sec
+epoch 6, iter 510, avg. loss 179.12, avg. ppl 3460.56 cum. examples 6940, speed 1365.25 words/sec, time elapsed 506.18 sec
+epoch 6, iter 520, avg. loss 174.45, avg. ppl 2308.63 cum. examples 7580, speed 1567.08 words/sec, time elapsed 515.38 sec
+epoch 6, iter 530, avg. loss 170.72, avg. ppl 2800.58 cum. examples 8220, speed 1517.32 words/sec, time elapsed 524.46 sec
+epoch 6, iter 540, avg. loss 179.17, avg. ppl 2941.16 cum. examples 8860, speed 1451.12 words/sec, time elapsed 534.35 sec
+epoch 6, iter 550, avg. loss 174.71, avg. ppl 2458.43 cum. examples 9500, speed 1561.73 words/sec, time elapsed 543.52 sec
+epoch 6, iter 560, avg. loss 183.25, avg. ppl 3422.86 cum. examples 10140, speed 1326.92 words/sec, time elapsed 554.38 sec
+epoch 6, iter 570, avg. loss 178.49, avg. ppl 3108.31 cum. examples 10780, speed 1408.33 words/sec, time elapsed 564.47 sec
+epoch 6, iter 580, avg. loss 181.91, avg. ppl 3070.44 cum. examples 11420, speed 1411.69 words/sec, time elapsed 574.74 sec
+epoch 6, iter 590, avg. loss 164.25, avg. ppl 2119.99 cum. examples 12060, speed 1663.97 words/sec, time elapsed 582.99 sec
+epoch 6, iter 600, avg. loss 176.43, avg. ppl 2766.46 cum. examples 12700, speed 1505.14 words/sec, time elapsed 592.45 sec
+epoch 6, iter 600, cum. loss 177.50, cum. ppl 3031.40 cum. examples 12700
+begin validation ...
+bleu score:  0.0051943879392084506
+validation: iter 600, dev. ppl 23950.918945
+hit patience 2
+epoch 7, iter 610, avg. loss 170.97, avg. ppl 2753.00 cum. examples 590, speed 961.50 words/sec, time elapsed 605.70 sec
+epoch 7, iter 620, avg. loss 173.37, avg. ppl 2346.82 cum. examples 1230, speed 1508.96 words/sec, time elapsed 615.17 sec
+epoch 7, iter 630, avg. loss 176.19, avg. ppl 2425.51 cum. examples 1870, speed 1493.54 words/sec, time elapsed 624.86 sec
+epoch 7, iter 640, avg. loss 164.80, avg. ppl 2239.47 cum. examples 2510, speed 1616.58 words/sec, time elapsed 633.32 sec
+epoch 7, iter 650, avg. loss 157.84, avg. ppl 1648.85 cum. examples 3150, speed 1709.14 words/sec, time elapsed 641.30 sec
+epoch 7, iter 660, avg. loss 188.99, avg. ppl 4125.03 cum. examples 3790, speed 1253.25 words/sec, time elapsed 652.89 sec
+epoch 7, iter 670, avg. loss 177.36, avg. ppl 2917.71 cum. examples 4430, speed 1391.67 words/sec, time elapsed 663.11 sec
+epoch 7, iter 680, avg. loss 170.19, avg. ppl 2516.42 cum. examples 5070, speed 1494.85 words/sec, time elapsed 672.42 sec
+epoch 7, iter 690, avg. loss 173.85, avg. ppl 2774.08 cum. examples 5710, speed 1427.83 words/sec, time elapsed 682.25 sec
+epoch 7, iter 700, avg. loss 173.97, avg. ppl 2523.12 cum. examples 6350, speed 1480.59 words/sec, time elapsed 691.85 sec
+epoch 8, iter 710, avg. loss 175.85, avg. ppl 2393.27 cum. examples 6940, speed 1462.81 words/sec, time elapsed 700.96 sec
+epoch 8, iter 720, avg. loss 171.40, avg. ppl 1761.30 cum. examples 7580, speed 1576.33 words/sec, time elapsed 710.28 sec
+epoch 8, iter 730, avg. loss 157.54, avg. ppl 1423.15 cum. examples 8220, speed 1769.54 words/sec, time elapsed 718.12 sec
+epoch 8, iter 740, avg. loss 164.24, avg. ppl 1976.51 cum. examples 8860, speed 1598.94 words/sec, time elapsed 726.79 sec
+epoch 8, iter 750, avg. loss 178.78, avg. ppl 4100.15 cum. examples 9500, speed 1196.56 words/sec, time elapsed 738.28 sec
+epoch 8, iter 760, avg. loss 172.27, avg. ppl 3089.32 cum. examples 10140, speed 1331.21 words/sec, time elapsed 748.59 sec
+epoch 8, iter 770, avg. loss 171.25, avg. ppl 2265.50 cum. examples 10780, speed 1494.65 words/sec, time elapsed 758.08 sec
+epoch 8, iter 780, avg. loss 171.04, avg. ppl 1756.79 cum. examples 11420, speed 1607.76 words/sec, time elapsed 767.19 sec
+epoch 8, iter 790, avg. loss 181.15, avg. ppl 2596.01 cum. examples 12060, speed 1367.22 words/sec, time elapsed 777.98 sec
+epoch 8, iter 800, avg. loss 172.67, avg. ppl 3027.40 cum. examples 12700, speed 1382.58 words/sec, time elapsed 787.95 sec
+epoch 8, iter 800, cum. loss 172.18, cum. ppl 2441.80 cum. examples 12700
+begin validation ...
+bleu score:  0.007615113106163274
+validation: iter 800, dev. ppl 24732.192383
+hit patience 3
+epoch 9, iter 810, avg. loss 177.69, avg. ppl 2873.48 cum. examples 590, speed 919.26 words/sec, time elapsed 802.27 sec
+epoch 9, iter 820, avg. loss 166.71, avg. ppl 1571.34 cum. examples 1230, speed 1619.35 words/sec, time elapsed 811.22 sec
+epoch 9, iter 830, avg. loss 177.63, avg. ppl 2295.99 cum. examples 1870, speed 1444.86 words/sec, time elapsed 821.39 sec
+epoch 9, iter 840, avg. loss 175.97, avg. ppl 3336.58 cum. examples 2510, speed 1219.46 words/sec, time elapsed 832.78 sec
+epoch 9, iter 850, avg. loss 164.90, avg. ppl 2058.46 cum. examples 3150, speed 1521.28 words/sec, time elapsed 841.87 sec
+epoch 9, iter 860, avg. loss 178.53, avg. ppl 3014.94 cum. examples 3790, speed 1255.58 words/sec, time elapsed 853.23 sec
+epoch 9, iter 870, avg. loss 172.14, avg. ppl 2438.25 cum. examples 4430, speed 1396.78 words/sec, time elapsed 863.34 sec
+epoch 9, iter 880, avg. loss 162.66, avg. ppl 1846.37 cum. examples 5070, speed 1548.84 words/sec, time elapsed 872.28 sec
+epoch 9, iter 890, avg. loss 162.38, avg. ppl 1738.79 cum. examples 5710, speed 1600.37 words/sec, time elapsed 880.98 sec
+epoch 9, iter 900, avg. loss 171.89, avg. ppl 1918.09 cum. examples 6350, speed 1515.66 words/sec, time elapsed 890.58 sec
+epoch 10, iter 910, avg. loss 159.55, avg. ppl 1803.31 cum. examples 6940, speed 1492.01 words/sec, time elapsed 899.00 sec
+epoch 10, iter 920, avg. loss 172.13, avg. ppl 2396.24 cum. examples 7580, speed 1343.87 words/sec, time elapsed 909.53 sec
+epoch 10, iter 930, avg. loss 166.57, avg. ppl 1832.73 cum. examples 8220, speed 1525.39 words/sec, time elapsed 918.83 sec
+epoch 10, iter 940, avg. loss 167.53, avg. ppl 1749.66 cum. examples 8860, speed 1564.39 words/sec, time elapsed 928.01 sec
+epoch 10, iter 950, avg. loss 166.05, avg. ppl 2898.13 cum. examples 9500, speed 1255.69 words/sec, time elapsed 938.63 sec
+epoch 10, iter 960, avg. loss 174.89, avg. ppl 2263.01 cum. examples 10140, speed 1382.82 words/sec, time elapsed 949.11 sec
+epoch 10, iter 970, avg. loss 166.89, avg. ppl 1723.61 cum. examples 10780, speed 1504.56 words/sec, time elapsed 958.63 sec
+epoch 10, iter 980, avg. loss 171.86, avg. ppl 1836.78 cum. examples 11420, speed 1512.09 words/sec, time elapsed 968.31 sec
+epoch 10, iter 990, avg. loss 175.74, avg. ppl 2669.82 cum. examples 12060, speed 1296.99 words/sec, time elapsed 979.30 sec
+epoch 10, iter 1000, avg. loss 156.09, avg. ppl 1518.55 cum. examples 12700, speed 1614.45 words/sec, time elapsed 987.75 sec
+epoch 10, iter 1000, cum. loss 169.40, cum. ppl 2129.50 cum. examples 12700
+begin validation ...
+bleu score:  0.01715100765247451
+validation: iter 1000, dev. ppl 24520.009766
+hit patience 4
+epoch 10, iter 1010, avg. loss 161.70, avg. ppl 1500.55 cum. examples 590, speed 1038.92 words/sec, time elapsed 1000.31 sec
+epoch 11, iter 1020, avg. loss 176.18, avg. ppl 2198.25 cum. examples 1230, speed 1340.75 words/sec, time elapsed 1011.24 sec
+epoch 11, iter 1030, avg. loss 172.41, avg. ppl 1597.41 cum. examples 1870, speed 1553.76 words/sec, time elapsed 1020.86 sec
+epoch 11, iter 1040, avg. loss 163.18, avg. ppl 1940.32 cum. examples 2510, speed 1435.85 words/sec, time elapsed 1030.47 sec
+epoch 11, iter 1050, avg. loss 165.06, avg. ppl 1736.98 cum. examples 3150, speed 1464.61 words/sec, time elapsed 1040.14 sec
+epoch 11, iter 1060, avg. loss 167.50, avg. ppl 1997.16 cum. examples 3790, speed 1408.57 words/sec, time elapsed 1050.15 sec
+epoch 11, iter 1070, avg. loss 163.52, avg. ppl 2040.32 cum. examples 4430, speed 1410.25 words/sec, time elapsed 1059.89 sec
+epoch 11, iter 1080, avg. loss 169.64, avg. ppl 2063.38 cum. examples 5070, speed 1365.62 words/sec, time elapsed 1070.31 sec
+epoch 11, iter 1090, avg. loss 162.22, avg. ppl 1778.92 cum. examples 5710, speed 1504.92 words/sec, time elapsed 1079.53 sec
+epoch 11, iter 1100, avg. loss 148.49, avg. ppl 1183.94 cum. examples 6350, speed 1726.25 words/sec, time elapsed 1087.31 sec
+epoch 11, iter 1110, avg. loss 161.14, avg. ppl 1207.19 cum. examples 6990, speed 1710.97 words/sec, time elapsed 1095.80 sec
+epoch 12, iter 1120, avg. loss 175.45, avg. ppl 2178.64 cum. examples 7580, speed 1313.33 words/sec, time elapsed 1106.05 sec
+epoch 12, iter 1130, avg. loss 167.22, avg. ppl 1555.29 cum. examples 8220, speed 1499.48 words/sec, time elapsed 1115.77 sec
+epoch 12, iter 1140, avg. loss 175.52, avg. ppl 2615.49 cum. examples 8860, speed 1284.89 words/sec, time elapsed 1126.88 sec
+epoch 12, iter 1150, avg. loss 152.05, avg. ppl 1429.66 cum. examples 9500, speed 1553.33 words/sec, time elapsed 1135.50 sec
+epoch 12, iter 1160, avg. loss 156.83, avg. ppl 1463.69 cum. examples 10140, speed 1572.15 words/sec, time elapsed 1144.26 sec
+epoch 12, iter 1170, avg. loss 165.99, avg. ppl 2072.50 cum. examples 10780, speed 1380.45 words/sec, time elapsed 1154.34 sec
+epoch 12, iter 1180, avg. loss 161.59, avg. ppl 1761.07 cum. examples 11420, speed 1498.16 words/sec, time elapsed 1163.57 sec
+epoch 12, iter 1190, avg. loss 171.57, avg. ppl 1724.48 cum. examples 12060, speed 1454.08 words/sec, time elapsed 1173.71 sec
+epoch 12, iter 1200, avg. loss 163.41, avg. ppl 1470.80 cum. examples 12700, speed 1539.07 words/sec, time elapsed 1183.02 sec
+epoch 12, iter 1200, cum. loss 165.01, cum. ppl 1742.03 cum. examples 12700
+begin validation ...
+bleu score:  0.017682471357387052
+validation: iter 1200, dev. ppl 24825.655924
+hit patience 5
+hit #1 trial
+load previously best model and decay learning rate by half
+restore parameters of the optimizers
+Traceback (most recent call last):
+  File "nmt.py", line 551, in <module>
+    main()
+  File "nmt.py", line 543, in main
+    train(args)
+  File "nmt.py", line 407, in train
+    loss = model(src_sents, tgt_sents)
+  File "nmt.py", line 120, in __call__
+    scores, symbols = self.decode(src_encodings, decoder_init_state, [y_input, y_tgt], stage="train")
+  File "nmt.py", line 164, in decode
+    loss.backward()
+  File "/home/ubuntu/LowResourceTedTalk/loss.py", line 34, in backward
+    self.acc_loss.backward()
+  File "/home/ubuntu/anaconda3/envs/nmt/lib/python3.6/site-packages/torch/tensor.py", line 93, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph)
+  File "/home/ubuntu/anaconda3/envs/nmt/lib/python3.6/site-packages/torch/autograd/__init__.py", line 90, in backward
+    allow_unreachable=True)  # allow_unreachable flag
+RuntimeError: cudnn RNN backward can only be called in training mode

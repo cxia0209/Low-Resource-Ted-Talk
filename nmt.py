@@ -24,7 +24,7 @@ Options:
     --hidden-size=<int>                     hidden size [default: 300]
     --clip-grad=<float>                     gradient clipping [default: 5.0]
     --log-every=<int>                       log every [default: 10]
-    --max-epoch=<int>                       max epoch [default: 30]
+    --max-epoch=<int>                       max epoch [default: 200]
     --patience=<int>                        wait for how many iterations to decay learning rate [default: 5]
     --max-num-trial=<int>                   terminate training after how many trials [default: 5]
     --lr-decay=<float>                      learning rate decay [default: 0.5]
@@ -32,7 +32,7 @@ Options:
     --lr=<float>                            learning rate [default: 0.001]
     --uniform-init=<float>                  uniformly initialize all parameters [default: 0.1]
     --save-to=<file>                        model save path
-    --valid-niter=<int>                     perform validation after how many iterations [default: 2000]
+    --valid-niter=<int>                     perform validation after how many iterations [default: 200]
     --dropout=<float>                       dropout [default: 0.2]
     --max-decoding-time-step=<int>          maximum number of decoding time steps [default: 70]
 """
@@ -269,17 +269,17 @@ class NMT(object):
             for r, h in zip(ref_corpus, hyp_corpus_ordered):
                 f.write(" ".join(h) + '\n')
         bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
-        print('bleu score: ', bleu)
+        print('bleu score: ', bleu, file=sys.stderr)
         
-        return cum_loss / count
+        return cum_loss / count, bleu
 
     # @staticmethod
     def load(self, model_path):
 
         self.encoder.load_state_dict(torch.load(model_path + '-encoder'))
         self.decoder.load_state_dict(torch.load(model_path + '-decoder'))
-        self.encoder.eval()
-        self.decoder.eval()
+        # self.encoder.eval()
+        # self.decoder.eval()
 
     def save(self, model_save_path):
         """
@@ -446,9 +446,9 @@ def train(args):
                 print('begin validation ...', file=sys.stderr)
 
                 # compute dev. ppl and bleu
-                dev_ppl = model.evaluate_ppl(dev_data, batch_size=128)   # dev batch size can be a bit larger
-                valid_metric = -dev_ppl
-
+                dev_ppl, bleu = model.evaluate_ppl(dev_data, batch_size=128)   # dev batch size can be a bit larger
+                # valid_metric = -dev_ppl
+                valid_metric = bleu
                 print('validation: iter %d, dev. ppl %f' % (train_iter, dev_ppl), file=sys.stderr)
 
                 is_better = len(hist_valid_scores) == 0 or valid_metric > max(hist_valid_scores)
