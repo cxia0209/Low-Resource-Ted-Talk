@@ -49,7 +49,7 @@ from docopt import docopt
 from tqdm import tqdm
 from nltk.translate.bleu_score import corpus_bleu, sentence_bleu, SmoothingFunction
 
-from utils import read_corpus, batch_iter
+from utils import read_corpus, batch_iter, load_vec
 from vocab import Vocab, VocabEntry
 
 import torch
@@ -76,7 +76,7 @@ class NMT(object):
         self.nvocab_tgt = len(vocab.tgt)
         self.vocab = vocab
         src_embeddings, tgt_embeddings = embeddings
-        embed_size = src_embeddings['vectors'].size(1)
+
         self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2,
                                vocab=vocab.src, embeddings=src_embeddings)
         self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,
@@ -375,11 +375,17 @@ def train(args):
 
     src_embeddings = None
     if args['--embed-src']:
-        src_embeddings = torch.load(args['--embed-src'])
+        try:
+            src_embeddings = torch.load(args['--embed-src'])
+        except:
+            src_embeddings = load_vec(args['--embed-src'], nmax=200000)
 
     tgt_embeddings = None
     if args['--embed-src']:
-        tgt_embeddings = torch.load(args['--embed-tgt'])
+        try:
+            tgt_embeddings = torch.load(args['--embed-tgt'])
+        except:
+            tgt_embeddings = load_vec(args['--embed-tgt'])
 
     model = NMT(embed_size=int(args['--embed-size']),
                 hidden_size=int(args['--hidden-size']),

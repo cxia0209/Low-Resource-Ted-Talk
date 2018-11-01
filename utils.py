@@ -1,6 +1,5 @@
 import math
-from typing import List
-
+import io
 import numpy as np
 
 
@@ -54,3 +53,17 @@ def batch_iter(data, batch_size, shuffle=False):
 
 
         yield src_sents, tgt_sents, orig_indices
+
+
+def load_vec(emb_path, nmax=50000):
+    word2vec = {}
+    with io.open(emb_path, 'r', encoding='utf-8', newline='\n', errors='ignore') as f:
+        next(f)
+        for i, line in enumerate(f):
+            word, vect = line.rstrip().split(' ', 1)
+            vect = np.fromstring(vect, sep=' ')
+            assert word not in word2vec, 'word found twice'
+            word2vec[word] = vect
+            if len(word2vec) == nmax:
+                break
+    return word2vec

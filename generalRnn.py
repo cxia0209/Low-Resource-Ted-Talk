@@ -1,5 +1,5 @@
 import torch.nn as nn
-
+import torch
 
 class BaseCoder(nn.Module):
     def __init__(self, vocab_size, hidden_size, embedding_size, input_dropout, output_dropout, n_layers, rnn, vocab, embeddings):
@@ -39,7 +39,12 @@ class BaseCoder(nn.Module):
         for i in range(vocab_size):
             word = vocab.id2word[i]
             try:
-                self.embedding.weight[i] = embeddings['vectors'][embeddings['dico'].index(word)]
+                # embeddings loaded from text
+                if 'vectors' not in embeddings or type(embeddings['vectors']) != torch.Tensor:
+                    self.embedding.weight[i] = torch.from_numpy(embeddings[word])
+                # embeddings loaded from torch bin Dictionary object
+                else:
+                    self.embedding.weight[i] = embeddings['vectors'][embeddings['dico'].index(word)]
             except Exception as e:
                 # print(e)
                 count += 1
