@@ -32,7 +32,7 @@ Options:
     --lr=<float>                            learning rate [default: 0.001]
     --uniform-init=<float>                  uniformly initialize all parameters [default: 0.1]
     --save-to=<file>                        model save path
-    --valid-niter=<int>                     perform validation after how many iterations [default: 20]
+    --valid-niter=<int>                     perform validation after how many iterations [default: 500]
     --dropout=<float>                       dropout [default: 0.2]
     --max-decoding-time-step=<int>          maximum number of decoding time steps [default: 70]
 """
