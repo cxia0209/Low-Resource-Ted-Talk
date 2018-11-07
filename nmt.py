@@ -78,7 +78,7 @@ class NMT(object):
         if keep_train:
             self.load('model')
         LAS_params = list(self.encoder.parameters()) + list(self.decoder.parameters())
-        self.optimizer = optim.Adam(LAS_params, lr=0.0001)
+        self.optimizer = optim.Adam(LAS_params, lr=0.001)
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=1, gamma=0.5)
         weight = torch.ones(self.nvocab_tgt)
         self.loss = NLLLoss(weight=weight, mask=0, size_average=False)
@@ -272,8 +272,8 @@ class NMT(object):
 
         self.encoder.load_state_dict(torch.load(model_path + '-encoder'))
         self.decoder.load_state_dict(torch.load(model_path + '-decoder'))
-        self.encoder.eval()
-        self.decoder.eval()
+        # self.encoder.eval()
+        # self.decoder.eval()
 
     def save(self, model_save_path):
         """
