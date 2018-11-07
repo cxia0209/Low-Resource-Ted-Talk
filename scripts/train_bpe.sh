@@ -1,0 +1,1 @@
+python -u nmt.py train --train-src=bpe_data/train.az-and-tr.bpe.txt --train-tgt=bpe_data/train.en.txt --dev-src=bpe_data/dev.az.bpe.txt --dev-tgt=bpe_data/dev.en-az.en.txt --vocab=bpe_data/vocab.bin --batch-size=16 &>> log_bpe.txt &
