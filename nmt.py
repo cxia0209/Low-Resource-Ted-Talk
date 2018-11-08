@@ -265,7 +265,7 @@ class NMT(object):
                 hyp_corpus_ordered.extend(batch_hyp_orderd)
                 cum_loss += scores
                 count += 1
-        with open('decode.txt', 'a') as f:
+        with open('decode.txt', 'w') as f:
             for r, h in zip(ref_corpus, hyp_corpus_ordered):
                 f.write(" ".join(h) + '\n')
         bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
@@ -562,7 +562,7 @@ def decode(args: Dict[str, str]):
             hyp_corpus_ordered.extend(batch_hyp_orderd)
             cum_loss += scores
             count += 1
-    with open('decode.txt', 'a') as f:
+    with open('decode.txt', 'w') as f:
         for r, h in zip(ref_corpus, hyp_corpus_ordered):
             f.write(" ".join(h) + '\n')
     bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
