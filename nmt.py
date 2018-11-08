@@ -32,7 +32,7 @@ Options:
     --save-to=<file>                        model save path
     --valid-niter=<int>                     perform validation after how many iterations [default: 2000]
     --dropout=<float>                       dropout [default: 0.2]
-    --max-decoding-time-step=<int>          maximum number of decoding time steps [default: 70]
+    --max-decoding-time-step=<int>          maximum number of decodingsch time steps [default: 70]
 """
 
 import math
@@ -74,7 +74,7 @@ class NMT(object):
         self.nvocab_tgt = len(vocab.tgt)
         self.vocab = vocab
         self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2)
-        self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,tf_rate=1.0)
+        self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size, output_dropout=dropout_rate, n_layers=2, tf_rate=1.0)
         if keep_train:
             self.load('model')
         LAS_params = list(self.encoder.parameters()) + list(self.decoder.parameters())
@@ -489,7 +489,6 @@ def beam_search(model: NMT, test_data_src: List[List[str]], beam_size: int, max_
 
 
 def decode(args: Dict[str, str]):
-    def decode(args):
     """
     performs decoding on a test set, and save the best-scoring decoding results.
     If the target gold-standard sentences are given, the function also computes
@@ -499,14 +498,16 @@ def decode(args: Dict[str, str]):
     if args['TEST_TARGET_FILE']:
         test_data_tgt = read_corpus(args['TEST_TARGET_FILE'], source='tgt')
 
-    # data/az-tr/nopre-az-tr/vocab-nopre.bin
-    vocab = pickle.load(open("data/az-tr/nopre-az-tr/vocab-nopre.bin", 'rb'))
+    vocab = pickle.load(open(args['--vocab'], 'rb'))
     print(f"load model from {args['MODEL_PATH']}", file=sys.stderr)
     model = NMT(embed_size=int(args['--embed-size']),
                 hidden_size=int(args['--hidden-size']),
                 dropout_rate=float(args['--dropout']),
                 vocab=vocab,keep_train=False)
     model.load(args['MODEL_PATH'])
+    # model.encoder.eval()
+    # model.decoder.eval()
+
     test_data = list(zip(test_data_src, test_data_tgt))
     batch_size = 128
 
