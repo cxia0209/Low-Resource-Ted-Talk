@@ -25,6 +25,7 @@ class Decoder(BaseCoder):
     def forward(self, input_seq, encoder_hidden, encoder_outputs, func=F.log_softmax, stage="train"):
 
         # batch_size = input_seq.size(0)
+        # TODO: max_length should be fixed for test decoding?
         max_length = input_seq.size(1)
         # using cuda or not
         inputs = input_seq
