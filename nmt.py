@@ -567,22 +567,6 @@ def decode(args: Dict[str, str]):
             f.write(" ".join(h) + '\n')
     bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
     print('bleu score: ', bleu)
-    """
-    hypotheses = beam_search(model, test_data_src,
-                             beam_size=int(args['--beam-size']),
-                             max_decoding_time_step=int(args['--max-decoding-time-step']))
-
-    if args['TEST_TARGET_FILE']:
-        top_hypotheses = [hyps[0] for hyps in hypotheses]
-        bleu_score = compute_corpus_level_bleu_score(test_data_tgt, top_hypotheses)
-        print(f'Corpus BLEU: {bleu_score}', file=sys.stderr)
-
-    with open(args['OUTPUT_FILE'], 'w') as f:
-        for src_sent, hyps in zip(test_data_src, hypotheses):
-            top_hyp = hyps[0]
-            hyp_sent = ' '.join(top_hyp.value)
-            f.write(hyp_sent + '\n')
-    """
 
 
 def main():
