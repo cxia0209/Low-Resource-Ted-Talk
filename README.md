@@ -28,3 +28,8 @@ We also provide the script we used to extract the parallel data from the files i
 
 
 - python nmt.py train --train-src=data/ted_talks/train.en-az.az.txt --train-tgt=data/ted_talks/train.en-az.en.txt --dev-src=data/ted_talks/dev.en-az.az.txt --dev-tgt=data/ted_talks/dev.en-az.en.txt --vocab=data/vocab.bin --batch-size=64
+
+
+prepend:
+
+python nmt.py train --train-src=data/pre-az-tr/train-src-pre.txt --train-tgt=data/pre-az-tr/train-tgt.txt --dev-src=data/pre-az-tr/dev.en-az.az.pre.txt --dev-tgt=data/ted_talks/dev.en-az.en.txt --vocab=data/pre-az-tr/vocab-pre.bin --batch-size=32

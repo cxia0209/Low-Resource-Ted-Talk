@@ -16,12 +16,10 @@ Options:
     --dev-src=<file>                        dev source file
     --dev-tgt=<file>                        dev target file
     --vocab=<file>                          vocab file
-    --embed-src=<file>                      pre-trained embeddings for src language
-    --embed-tgt=<file>                      pre-trained embeddings for tgt language
     --seed=<int>                            seed [default: 0]
     --batch-size=<int>                      batch size [default: 32]
-    --embed-size=<int>                      embedding size [default: 300]
-    --hidden-size=<int>                     hidden size [default: 300]
+    --embed-size=<int>                      embedding size [default: 256]
+    --hidden-size=<int>                     hidden size [default: 256]
     --clip-grad=<float>                     gradient clipping [default: 5.0]
     --log-every=<int>                       log every [default: 10]
     --max-epoch=<int>                       max epoch [default: 30]
@@ -69,22 +67,18 @@ Hypothesis = namedtuple('Hypothesis', ['value', 'score'])
 
 class NMT(object):
 
-    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2,keep_train=False, embeddings=None):
+    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2,keep_train=False):
         super(NMT, self).__init__()
 
         self.nvocab_src = len(vocab.src)
         self.nvocab_tgt = len(vocab.tgt)
         self.vocab = vocab
-        src_embeddings, tgt_embeddings = embeddings
-        embed_size = src_embeddings['vectors'].size(1)
-        self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2,
-                               vocab=vocab.src, embeddings=src_embeddings)
-        self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,
-                               tf_rate=1.0, vocab=vocab.tgt, embeddings=tgt_embeddings)
+        self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2)
+        self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,tf_rate=1.0)
         if keep_train:
             self.load('model')
         LAS_params = list(self.encoder.parameters()) + list(self.decoder.parameters())
-        self.optimizer = optim.Adam(LAS_params, lr=0.0001)
+        self.optimizer = optim.Adam(LAS_params, lr=0.001)
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=1, gamma=0.5)
         weight = torch.ones(self.nvocab_tgt)
         self.loss = NLLLoss(weight=weight, mask=0, size_average=False)
@@ -278,8 +272,8 @@ class NMT(object):
 
         self.encoder.load_state_dict(torch.load(model_path + '-encoder'))
         self.decoder.load_state_dict(torch.load(model_path + '-decoder'))
-        self.encoder.eval()
-        self.decoder.eval()
+        # self.encoder.eval()
+        # self.decoder.eval()
 
     def save(self, model_save_path):
         """
@@ -373,18 +367,10 @@ def train(args):
 
     vocab = pickle.load(open(args['--vocab'], 'rb'))
 
-    src_embeddings = None
-    if args['--embed-src']:
-        src_embeddings = torch.load(args['--embed-src'])
-
-    tgt_embeddings = None
-    if args['--embed-src']:
-        tgt_embeddings = torch.load(args['--embed-tgt'])
-
     model = NMT(embed_size=int(args['--embed-size']),
                 hidden_size=int(args['--hidden-size']),
                 dropout_rate=float(args['--dropout']),
-                vocab=vocab, keep_train=False, embeddings=(src_embeddings, tgt_embeddings))
+                vocab=vocab)
 
     num_trial = 0
     train_iter = patience = cum_loss = report_loss = cumulative_tgt_words = report_tgt_words = 0
@@ -503,8 +489,9 @@ def beam_search(model: NMT, test_data_src: List[List[str]], beam_size: int, max_
 
 
 def decode(args: Dict[str, str]):
+    def decode(args):
     """
-    performs decoding on a test set, and save the best-scoring decoding results. 
+    performs decoding on a test set, and save the best-scoring decoding results.
     If the target gold-standard sentences are given, the function also computes
     corpus-level BLEU score.
     """
@@ -512,9 +499,52 @@ def decode(args: Dict[str, str]):
     if args['TEST_TARGET_FILE']:
         test_data_tgt = read_corpus(args['TEST_TARGET_FILE'], source='tgt')
 
+    # data/az-tr/nopre-az-tr/vocab-nopre.bin
+    vocab = pickle.load(open("data/az-tr/nopre-az-tr/vocab-nopre.bin", 'rb'))
     print(f"load model from {args['MODEL_PATH']}", file=sys.stderr)
-    model = NMT.load(args['MODEL_PATH'])
+    model = NMT(embed_size=int(args['--embed-size']),
+                hidden_size=int(args['--hidden-size']),
+                dropout_rate=float(args['--dropout']),
+                vocab=vocab,keep_train=False)
+    model.load(args['MODEL_PATH'])
+    test_data = list(zip(test_data_src, test_data_tgt))
+    batch_size = 128
 
+    ref_corpus = []
+    hyp_corpus = []
+    cum_loss = 0
+    count = 0
+    hyp_corpus_ordered = []
+    with torch.no_grad():
+        for src_sents, tgt_sents, orig_indices in batch_iter(test_data, batch_size):
+            ref_corpus.extend(tgt_sents)
+            actual_size = len(src_sents)
+            src_sents = vocab.src.words2indices(src_sents)
+            tgt_sents = vocab.tgt.words2indices(tgt_sents)
+            src_sents, src_len, y_input, y_tgt, tgt_len = sent_padding(src_sents, tgt_sents)
+            src_encodings, decoder_init_state = model.encode(src_sents,src_len)
+            scores, symbols = model.decode_without_bp(src_encodings, decoder_init_state, [y_input, y_tgt])
+
+            index = 0
+            batch_hyp_orderd = [None] * symbols.size(0)
+            for sent in symbols:
+                word_seq = []
+                for idx in sent:
+                    if idx == 2:
+                        break
+                    word_seq.append(vocab.tgt.id2word[np.asscalar(idx)])
+                hyp_corpus.append(word_seq)
+                batch_hyp_orderd[orig_indices[index]] = word_seq
+                index += 1
+            hyp_corpus_ordered.extend(batch_hyp_orderd)
+            cum_loss += scores
+            count += 1
+    with open('decode.txt', 'a') as f:
+        for r, h in zip(ref_corpus, hyp_corpus_ordered):
+            f.write(" ".join(h) + '\n')
+    bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
+    print('bleu score: ', bleu)
+    """
     hypotheses = beam_search(model, test_data_src,
                              beam_size=int(args['--beam-size']),
                              max_decoding_time_step=int(args['--max-decoding-time-step']))
@@ -529,7 +559,7 @@ def decode(args: Dict[str, str]):
             top_hyp = hyps[0]
             hyp_sent = ' '.join(top_hyp.value)
             f.write(hyp_sent + '\n')
-
+    """
 
 def main():
     args = docopt(__doc__)
