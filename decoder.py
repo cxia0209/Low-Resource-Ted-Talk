@@ -26,7 +26,8 @@ class Decoder(BaseCoder):
 
         # batch_size = input_seq.size(0)
         # TODO: max_length should be fixed for test decoding?
-        max_length = input_seq.size(1)
+        # max_length = input_seq.size(1)
+        max_length = 100
         # using cuda or not
         inputs = input_seq
         
@@ -46,11 +47,12 @@ class Decoder(BaseCoder):
             outputs.append(output_seq)
 
             if i == max_length - 1: break
-            if np.random.random_sample() < self.tf_rate:
-                prev = inputs[:, i+1].unsqueeze(1)
+            if stage == "train":
+                if np.random.random_sample() < self.tf_rate:
+                    prev = inputs[:, i+1].unsqueeze(1)
+                else:
+                    prev = outputs[-1].topk(1)[1] # max probability index
             else:
-                prev = outputs[-1].topk(1)[1] # max probability index
-            if stage != "train":
                 prev = outputs[-1].topk(1)[1]
             
             if symbols is None: 
