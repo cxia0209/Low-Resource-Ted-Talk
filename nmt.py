@@ -489,8 +489,9 @@ def beam_search(model: NMT, test_data_src: List[List[str]], beam_size: int, max_
 
 
 def decode(args: Dict[str, str]):
+    def decode(args):
     """
-    performs decoding on a test set, and save the best-scoring decoding results. 
+    performs decoding on a test set, and save the best-scoring decoding results.
     If the target gold-standard sentences are given, the function also computes
     corpus-level BLEU score.
     """
@@ -498,9 +499,52 @@ def decode(args: Dict[str, str]):
     if args['TEST_TARGET_FILE']:
         test_data_tgt = read_corpus(args['TEST_TARGET_FILE'], source='tgt')
 
+    # data/az-tr/nopre-az-tr/vocab-nopre.bin
+    vocab = pickle.load(open("data/az-tr/nopre-az-tr/vocab-nopre.bin", 'rb'))
     print(f"load model from {args['MODEL_PATH']}", file=sys.stderr)
-    model = NMT.load(args['MODEL_PATH'])
+    model = NMT(embed_size=int(args['--embed-size']),
+                hidden_size=int(args['--hidden-size']),
+                dropout_rate=float(args['--dropout']),
+                vocab=vocab,keep_train=False)
+    model.load(args['MODEL_PATH'])
+    test_data = list(zip(test_data_src, test_data_tgt))
+    batch_size = 128
 
+    ref_corpus = []
+    hyp_corpus = []
+    cum_loss = 0
+    count = 0
+    hyp_corpus_ordered = []
+    with torch.no_grad():
+        for src_sents, tgt_sents, orig_indices in batch_iter(test_data, batch_size):
+            ref_corpus.extend(tgt_sents)
+            actual_size = len(src_sents)
+            src_sents = vocab.src.words2indices(src_sents)
+            tgt_sents = vocab.tgt.words2indices(tgt_sents)
+            src_sents, src_len, y_input, y_tgt, tgt_len = sent_padding(src_sents, tgt_sents)
+            src_encodings, decoder_init_state = model.encode(src_sents,src_len)
+            scores, symbols = model.decode_without_bp(src_encodings, decoder_init_state, [y_input, y_tgt])
+
+            index = 0
+            batch_hyp_orderd = [None] * symbols.size(0)
+            for sent in symbols:
+                word_seq = []
+                for idx in sent:
+                    if idx == 2:
+                        break
+                    word_seq.append(vocab.tgt.id2word[np.asscalar(idx)])
+                hyp_corpus.append(word_seq)
+                batch_hyp_orderd[orig_indices[index]] = word_seq
+                index += 1
+            hyp_corpus_ordered.extend(batch_hyp_orderd)
+            cum_loss += scores
+            count += 1
+    with open('decode.txt', 'a') as f:
+        for r, h in zip(ref_corpus, hyp_corpus_ordered):
+            f.write(" ".join(h) + '\n')
+    bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
+    print('bleu score: ', bleu)
+    """
     hypotheses = beam_search(model, test_data_src,
                              beam_size=int(args['--beam-size']),
                              max_decoding_time_step=int(args['--max-decoding-time-step']))
@@ -515,7 +559,7 @@ def decode(args: Dict[str, str]):
             top_hyp = hyps[0]
             hyp_sent = ' '.join(top_hyp.value)
             f.write(hyp_sent + '\n')
-
+    """
 
 def main():
     args = docopt(__doc__)
