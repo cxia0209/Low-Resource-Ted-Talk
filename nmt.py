@@ -440,6 +440,9 @@ def train(args):
             # saved best model (and the state of the optimizer), halve the learning rate and continue
             # training. This repeats for up to `--max-num-trial` times.
 
+            if train_iter % 100 == 0:
+                torch.cuda.empty_cache()
+
             if train_iter % valid_niter == 0:
                 print('epoch %d, iter %d, cum. loss %.2f, cum. ppl %.2f cum. examples %d' % (epoch, train_iter,
                                                                                          cum_loss / cumulative_examples,
