@@ -69,7 +69,7 @@ Hypothesis = namedtuple('Hypothesis', ['value', 'score'])
 
 class NMT(object):
 
-    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2,keep_train=False, embeddings=None):
+    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2, keep_train=False, embeddings=None):
         super(NMT, self).__init__()
 
         self.nvocab_src = len(vocab.src)
@@ -525,7 +525,7 @@ def decode(args: Dict[str, str]):
     model = NMT(embed_size=int(args['--embed-size']),
                 hidden_size=int(args['--hidden-size']),
                 dropout_rate=float(args['--dropout']),
-                vocab=vocab,keep_train=False)
+                vocab=vocab, embeddings=(None, None))
     model.load(args['MODEL_PATH'])
     # model.encoder.eval()
     # model.decoder.eval()
