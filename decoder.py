@@ -26,8 +26,8 @@ class Decoder(BaseCoder):
 
         # batch_size = input_seq.size(0)
         # TODO: max_length should be fixed for test decoding?
-        # max_length = input_seq.size(1)
-        max_length = 100
+        max_length = input_seq.size(1)
+        # max_length = 100
         # using cuda or not
         inputs = input_seq
         
