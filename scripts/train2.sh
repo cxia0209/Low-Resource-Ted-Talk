@@ -10,3 +10,7 @@ python -u nmt.py train --train-src=bpe_data/train.az-and-tr.bpe.txt --train-tgt=
 
 python -u nmt.py train --train-src=concat_data/train.src.txt --train-tgt=concat_data/train.tgt.txt --dev-src=concat_data/dev.en-az.az.txt --dev-tgt=concat_data/dev.en-az.en.txt --vocab=concat_data/vocab.bin --batch-size=16 &> log_orig.txt &
 
+python -u nmt.py train --train-src=bpe_az_data/train.az-and-tr.bpe.txt --train-tgt=bpe_az_data/train.en.bpe.txt \
+--dev-src=bpe_az_data/test.az.bpe.txt --dev-tgt=bpe_az_data/test.en.bpe.txt --vocab=bpe_az_data/vocab.bin --batch-size=32 &> log_bpe_both.txt &
+
+
