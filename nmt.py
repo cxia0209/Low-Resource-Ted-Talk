@@ -498,7 +498,9 @@ def decode(args: Dict[str, str]):
     if args['TEST_TARGET_FILE']:
         test_data_tgt = read_corpus(args['TEST_TARGET_FILE'], source='tgt')
 
-    vocab = pickle.load(open(args['--vocab'], 'rb'))
+    # TODO: modify vocab path!!!
+    vocab = pickle.load(open("concat_data/vocab.bin", 'rb'))
+
     print(f"load model from {args['MODEL_PATH']}", file=sys.stderr)
     model = NMT(embed_size=int(args['--embed-size']),
                 hidden_size=int(args['--hidden-size']),
