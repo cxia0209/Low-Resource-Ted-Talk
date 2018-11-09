@@ -32,7 +32,7 @@ Options:
     --lr=<float>                            learning rate [default: 0.001]
     --uniform-init=<float>                  uniformly initialize all parameters [default: 0.1]
     --save-to=<file>                        model save path
-    --valid-niter=<int>                     perform validation after how many iterations [default: 2000]
+    --valid-niter=<int>                     perform validation after how many iterations [default: 1000]
     --dropout=<float>                       dropout [default: 0.2]
     --max-decoding-time-step=<int>          maximum number of decoding time steps [default: 70]
 """
@@ -439,7 +439,9 @@ def train(args):
             # if the dev score does not increase after `--patience` iterations, we reload the previously
             # saved best model (and the state of the optimizer), halve the learning rate and continue
             # training. This repeats for up to `--max-num-trial` times.
-
+            
+            if train_iter % 100 == 0:
+                torch.cuda.empty_cache()
             if train_iter % valid_niter == 0:
                 print('epoch %d, iter %d, cum. loss %.2f, cum. ppl %.2f cum. examples %d' % (epoch, train_iter,
                                                                                          cum_loss / cumulative_examples,
@@ -531,7 +533,7 @@ def decode(args: Dict[str, str]):
     # model.decoder.eval()
 
     test_data = list(zip(test_data_src, test_data_tgt))
-    batch_size = 128
+    batch_size = 32
 
     ref_corpus = []
     hyp_corpus = []
@@ -562,7 +564,7 @@ def decode(args: Dict[str, str]):
             hyp_corpus_ordered.extend(batch_hyp_orderd)
             cum_loss += scores
             count += 1
-    with open('decode.txt', 'w') as f:
+    with open(args['OUTPUT_FILE'], 'w') as f:
         for r, h in zip(ref_corpus, hyp_corpus_ordered):
             f.write(" ".join(h) + '\n')
     bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
