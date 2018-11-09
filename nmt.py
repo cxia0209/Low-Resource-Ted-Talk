@@ -69,7 +69,7 @@ Hypothesis = namedtuple('Hypothesis', ['value', 'score'])
 
 class NMT(object):
 
-    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2, keep_train=True, embeddings=None):
+    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2, keep_train=False, embeddings=None):
         super(NMT, self).__init__()
 
         self.nvocab_src = len(vocab.src)
