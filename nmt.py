@@ -79,7 +79,7 @@ class NMT(object):
         self.encoder = Encoder(self.nvocab_src, hidden_size, embed_size, input_dropout=dropout_rate, n_layers=2,
                                vocab=vocab.src, embeddings=src_embeddings)
         self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,
-                               tf_rate=1.0, vocab=vocab.tgt, embeddings=tgt_embeddings)
+                               tf_rate=0.8, vocab=vocab.tgt, embeddings=tgt_embeddings)
         if keep_train:
             self.load('model')
         LAS_params = list(self.encoder.parameters()) + list(self.decoder.parameters())
