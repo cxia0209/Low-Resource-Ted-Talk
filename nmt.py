@@ -523,7 +523,7 @@ def decode(args: Dict[str, str]):
         test_data_tgt = read_corpus(args['TEST_TARGET_FILE'], source='tgt')
 
     # TODO: modify vocab path!!!
-    vocab = pickle.load(open("bpe_data/vocab.bin", 'rb'))
+    vocab = pickle.load(open("bpe_az_data/vocab.bin", 'rb'))
 
     print(f"load model from {args['MODEL_PATH']}", file=sys.stderr)
     model = NMT(embed_size=int(args['--embed-size']),
@@ -535,7 +535,7 @@ def decode(args: Dict[str, str]):
     # model.decoder.eval()
 
     test_data = list(zip(test_data_src, test_data_tgt))
-    batch_size = 128
+    batch_size = 32
 
     ref_corpus = []
     hyp_corpus = []
@@ -567,11 +567,12 @@ def decode(args: Dict[str, str]):
             cum_loss += scores
             count += 1
     sp = spm.SentencePieceProcessor()
-    sp.Load("bpe_data/az-and-tr.model")
-    with open('decode.txt', 'w') as f:
+    # TODO: modify!!!
+    sp.Load("bpe_az_data/en.model")
+    with open(args['OUTPUT_FILE'], 'w') as f:
         for r, h in zip(ref_corpus, hyp_corpus_ordered):
-		tmp = sp.DecodePieces(h)
-		f.write(tmp + '\n')
+                tmp = sp.DecodePieces(h)
+                f.write(tmp + '\n')
     bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
     print('bleu score: ', bleu)
 
