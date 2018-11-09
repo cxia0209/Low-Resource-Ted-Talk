@@ -62,7 +62,7 @@ from torch import optim
 
 from loss import NLLLoss
 from optim import Optimizer
-
+import sentencepiece as spm
 
 Hypothesis = namedtuple('Hypothesis', ['value', 'score'])
 
@@ -566,7 +566,8 @@ def decode(args: Dict[str, str]):
             count += 1
     with open(args['OUTPUT_FILE'], 'w') as f:
         for r, h in zip(ref_corpus, hyp_corpus_ordered):
-            f.write(" ".join(h) + '\n')
+            tmp = sp.DecodePieces(h)
+            f.write(tmp) + '\n')
     bleu = compute_corpus_level_bleu_score(ref_corpus, hyp_corpus)
     print('bleu score: ', bleu)
     """
