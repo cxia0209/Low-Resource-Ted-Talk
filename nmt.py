@@ -69,7 +69,7 @@ Hypothesis = namedtuple('Hypothesis', ['value', 'score'])
 
 class NMT(object):
 
-    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2, keep_train=False, embeddings=None):
+    def __init__(self, embed_size, hidden_size, vocab, dropout_rate=0.2, keep_train=True, embeddings=None):
         super(NMT, self).__init__()
 
         self.nvocab_src = len(vocab.src)
@@ -82,6 +82,7 @@ class NMT(object):
         self.decoder = Decoder(self.nvocab_tgt, 2*hidden_size, embed_size,output_dropout=dropout_rate, n_layers=2,
                                tf_rate=1.0, vocab=vocab.tgt, embeddings=tgt_embeddings)
         if keep_train:
+            print("loading previous model")
             self.load('model')
         LAS_params = list(self.encoder.parameters()) + list(self.decoder.parameters())
         self.optimizer = optim.Adam(LAS_params, lr=0.001)
